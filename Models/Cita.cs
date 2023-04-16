@@ -19,7 +19,7 @@ namespace ProyectoSemana5.Models
         public long medicoId { get; set; }
 
         [Required]
-        [Column("descripcion", TypeName = "vachar(100)")]
+        [Column("descripcion", TypeName = "varchar(100)")]
         public string? descripcion { get; set; }
     }
 }

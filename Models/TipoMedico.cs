@@ -10,7 +10,7 @@ namespace ProyectoSemana5.Models
         [Column("tipoMedicoId", TypeName = "int")]
         public int tipoMedicoId { get; set; }
 
-        [Column("cargo", TypeName = "vachar(100)")]
+        [Column("cargo", TypeName = "varchar(100)")]
         public string? descripcion { get; set; }
     }
 }

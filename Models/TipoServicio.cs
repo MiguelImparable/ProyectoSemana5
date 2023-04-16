@@ -11,7 +11,7 @@ namespace ProyectoSemana5.Models
         public int TipoServicioId { get; set; }
 
         [Required]
-        [Column("descripcionPlan", TypeName = "vachar(100)")]
+        [Column("descripcionPlan", TypeName = "varchar(100)")]
         public string? descripcionPlan { get; set; }
     }
 }
