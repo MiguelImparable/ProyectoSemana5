@@ -11,6 +11,6 @@ namespace ProyectoSemana5.Models
         public int tipoMedicoId { get; set; }
 
         [Column("cargo", TypeName = "varchar(100)")]
-        public string? descripcion { get; set; }
+        public string? cargo { get; set; }
     }
 }

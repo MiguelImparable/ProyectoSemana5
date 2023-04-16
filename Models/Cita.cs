@@ -19,6 +19,10 @@ namespace ProyectoSemana5.Models
         public long medicoId { get; set; }
 
         [Required]
+        [Column("fecha", TypeName = "DateTime")]
+        public DateTime fecha { get; set; }
+
+        [Required]
         [Column("descripcion", TypeName = "varchar(100)")]
         public string? descripcion { get; set; }
     }
