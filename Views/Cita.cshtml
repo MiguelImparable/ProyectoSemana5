@@ -1,0 +1,28 @@
+@using ProyectoSemana5.Models
+@model IEnumerable<ProyectoSemana5.Models.Cita>
+
+<h1>Lista de Citas</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Medico</th>
+            <th>Fecha</th>
+            <th>Descripción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cita in Model)
+        {
+            <tr>
+                <td>@cita.citaId</td>
+                <td>@cita.usuarioId</td>
+                <td>@cita.medicoId</td>
+                <td>@cita.fecha</td>
+                <td>@cita.descripcion</td>
+            </tr>
+        }
+    </tbody>
+</table>

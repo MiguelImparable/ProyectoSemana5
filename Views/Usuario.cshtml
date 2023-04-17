@@ -1,0 +1,26 @@
+@using ProyectoSemana5.Models
+@model IEnumerable<ProyectoSemana5.Models.Usuario>
+
+<h1>Lista de Usuarios</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Persona</th>
+            <th>Tipo de Servicio</th>
+            <th>Fecha de Ingreso</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuario in Model)
+        {
+            <tr>
+                <td>@usuario.usuarioId</td>
+                <td>@usuario.personaId</td>
+                <td>@usuario.TipoServicioId</td>
+                <td>@usuario.fechaIngreso</td>
+            </tr>
+        }
+    </tbody>
+</table>

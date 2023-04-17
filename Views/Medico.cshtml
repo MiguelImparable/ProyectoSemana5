@@ -1,0 +1,26 @@
+@using ProyectoSemana5.Models
+@model IEnumerable<ProyectoSemana5.Models.Medico>
+
+<h1>Lista de Médicos</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Persona</th>
+            <th>Tipo de Médico</th>
+            <th>Fecha de Contrato</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var medico in Model)
+        {
+            <tr>
+                <td>@medico.medicoId</td>
+                <td>@medico.personaId</td>
+                <td>@medico.tipoMedicoId</td>
+                <td>@medico.fechaContrato</td>
+            </tr>
+        }
+    </tbody>
+</table>

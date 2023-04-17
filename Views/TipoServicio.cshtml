@@ -1,0 +1,34 @@
+@using ProyectoSemana5.Models
+@model IEnumerable<ProyectoSemana5.Models.TipoServicio>
+
+<h1>Lista de Tipos de Servicio</h1>
+
+<p>
+    <a asp-action="Create">Crear Nuevo Tipo de Servicio</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.descripcionPlan)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.descripcionPlan)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.TipoServicioId">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.TipoServicioId">Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.TipoServicioId">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

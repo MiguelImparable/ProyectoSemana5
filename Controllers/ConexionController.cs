@@ -33,7 +33,7 @@ namespace ProyectoSemana5.Controllers
             datosServices.InsertarMedico(dbContext, 4, 2, new DateTime(2008, 5, 1, 8, 30, 52));
             datosServices.InsertarMedico(dbContext, 5, 3, new DateTime(2008, 5, 1, 8, 30, 52));
             datosServices.InsertarCita(dbContext, 3, 1, new DateTime(2023, 4, 17, 10, 00, 00), "Cita Anual de evaluacion de crecimiento y desarrollo");
-            datosServices.InsertarCita(dbContext, 1, 2, new DateTime(2008, 4, 17, 10, 00, 00), "Dolor En la rodilla");
+            datosServices.InsertarCita(dbContext, 1, 2, new DateTime(2023, 4, 25, 12, 00, 00), "Dolor En la rodilla");
             //********************************************************************************************************************************
             return Results.Ok("Base de Datos en Memoria y con Datos Iniciales");
         }
