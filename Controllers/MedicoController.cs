@@ -1,65 +1,60 @@
-using System;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoSemana5.Context;
 using ProyectoSemana5.Models;
-
-namespace ProyectoSemana5.Controllers
+namespace ProyectoSemana5.Controllers;
+[ApiController]
+[Route("[controller]")]
+public class MedicoController : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class MedicoController : ControllerBase
+    private readonly FachadaContext _dbContext;
+
+    public MedicoController(FachadaContext dbContext)
     {
-        private readonly FachadaContext _dbContext;
+        _dbContext = dbContext;
+    }
 
-        public MedicoController(FachadaContext dbContext)
+    [HttpGet]
+    public IActionResult Get()
+    {
+        return Ok(_dbContext.Medicos);
+    }
+
+    [HttpPost]
+    public IActionResult Post([FromBody] Medico medico)
+    {
+        _dbContext.Add(medico);
+        _dbContext.SaveChanges();
+        return Ok("Medico almacenado");
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult Put(long id, [FromBody] Medico medico)
+    {
+        var medicoToUpdate = _dbContext.Medicos.Find(id);
+        if (medicoToUpdate == null)
         {
-            _dbContext = dbContext;
+            return NotFound();
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        medicoToUpdate.personaId = medico.personaId;
+        medicoToUpdate.tipoMedicoId = medico.tipoMedicoId;
+        medicoToUpdate.fechaContrato = medico.fechaContrato;
+
+        _dbContext.SaveChanges();
+        return Ok(medicoToUpdate);
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(long id)
+    {
+        var medico = _dbContext.Medicos.Find(id);
+        if (medico == null)
         {
-            return Ok(_dbContext.Medicos);
+            return NotFound();
         }
 
-        [HttpPost]
-        public IActionResult Post([FromBody] Medico medico)
-        {
-            _dbContext.Add(medico);
-            _dbContext.SaveChanges();
-            return Ok("Medico almacenado");
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult Put(long id, [FromBody] Medico medico)
-        {
-            var medicoToUpdate = _dbContext.Medicos.Find(id);
-            if (medicoToUpdate == null)
-            {
-                return NotFound();
-            }
-
-            medicoToUpdate.personaId = medico.personaId;
-            medicoToUpdate.tipoMedicoId = medico.tipoMedicoId;
-            medicoToUpdate.fechaContrato = medico.fechaContrato;
-
-            _dbContext.SaveChanges();
-            return Ok(medicoToUpdate);
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(long id)
-        {
-            var medico = _dbContext.Medicos.Find(id);
-            if (medico == null)
-            {
-                return NotFound();
-            }
-
-            _dbContext.Remove(medico);
-            _dbContext.SaveChanges();
-            return Ok("Medico eliminado");
-        }
+        _dbContext.Remove(medico);
+        _dbContext.SaveChanges();
+        return Ok("Medico eliminado");
     }
 }

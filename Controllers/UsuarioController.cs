@@ -1,66 +1,61 @@
-using System;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoSemana5.Context;
 using ProyectoSemana5.Models;
-
-namespace ProyectoSemana5.Controllers
+namespace ProyectoSemana5.Controllers;
+[ApiController]
+[Route("[controller]")]
+public class UsuarioController : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class UsuarioController : ControllerBase
+    private readonly FachadaContext _dbContext;
+
+    public UsuarioController(FachadaContext dbContext)
     {
-        private readonly FachadaContext _dbContext;
+        _dbContext = dbContext;
+    }
 
-        public UsuarioController(FachadaContext dbContext)
+    [HttpGet]
+    public IActionResult Get()
+    {
+        return Ok(_dbContext.Usuarios);
+    }
+
+    [HttpPost]
+    public IActionResult Post([FromBody] Usuario usuario)
+    {
+        _dbContext.Add(usuario);
+        _dbContext.SaveChanges();
+        return Ok("Usuario Almacenado");
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult Put([FromServices] FachadaContext dbContext, long id, [FromBody] Usuario usuario)
+    {
+        var usuarioToUpdate = dbContext.Usuarios.Find(id);
+        if (usuarioToUpdate == null)
         {
-            _dbContext = dbContext;
+            return NotFound();
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        usuarioToUpdate.personaId = usuario.personaId;
+        usuarioToUpdate.TipoServicioId = usuario.TipoServicioId;
+        usuarioToUpdate.fechaIngreso = usuario.fechaIngreso;
+
+        dbContext.SaveChanges();
+        return Ok(usuarioToUpdate);
+    }
+
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(long id)
+    {
+        var usuario = _dbContext.Usuarios.Find(id);
+        if (usuario == null)
         {
-            return Ok(_dbContext.Usuarios);
+            return NotFound();
         }
 
-        [HttpPost]
-        public IActionResult Post([FromBody] Usuario usuario)
-        {
-            _dbContext.Add(usuario);
-            _dbContext.SaveChanges();
-            return Ok("Usuario Almacenado");
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult Put([FromServices] FachadaContext dbContext, long id, [FromBody] Usuario usuario)
-        {
-            var usuarioToUpdate = dbContext.Usuarios.Find(id);
-            if (usuarioToUpdate == null)
-            {
-                return NotFound();
-            }
-
-            usuarioToUpdate.personaId = usuario.personaId;
-            usuarioToUpdate.TipoServicioId = usuario.TipoServicioId;
-            usuarioToUpdate.fechaIngreso = usuario.fechaIngreso;
-
-            dbContext.SaveChanges();
-            return Ok(usuarioToUpdate);
-        }
-
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(long id)
-        {
-            var usuario = _dbContext.Usuarios.Find(id);
-            if (usuario == null)
-            {
-                return NotFound();
-            }
-
-            _dbContext.Remove(usuario);
-            _dbContext.SaveChanges();
-            return Ok("Usuario Eliminado");
-        }
+        _dbContext.Remove(usuario);
+        _dbContext.SaveChanges();
+        return Ok("Usuario Eliminado");
     }
 }

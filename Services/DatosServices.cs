@@ -1,6 +1,3 @@
-using System.Data.SqlClient;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using ProyectoSemana5.Context;
 using ProyectoSemana5.Models;
 
