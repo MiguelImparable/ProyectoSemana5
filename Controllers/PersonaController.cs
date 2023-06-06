@@ -13,10 +13,25 @@ public class PersonaController : ControllerBase
         _dbContext = dbContext;
     }
 
-    [HttpGet]
-    public IActionResult Get()
+    [HttpGet("{id?}")]
+    public IActionResult Get(long id)
     {
-        return Ok(_dbContext.Personas);
+        if (id == 0)
+        {
+            return Ok(_dbContext.Personas);
+        }
+        else
+        {
+            var persona = _dbContext.Personas.Find(id);
+            if (persona == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(persona);
+            }
+        }
     }
 
     [HttpPost]
@@ -24,7 +39,7 @@ public class PersonaController : ControllerBase
     {
         _dbContext.Add(persona);
         _dbContext.SaveChanges();
-        return Ok("Persona Almacenada");
+        return Ok(_dbContext.Personas);
     }
 
     [HttpPut("{id}")]
@@ -35,14 +50,12 @@ public class PersonaController : ControllerBase
         {
             return NotFound();
         }
-
         personaToUpdate.nombre = persona.nombre;
         personaToUpdate.cedula = persona.cedula;
         personaToUpdate.celular = persona.celular;
         personaToUpdate.direccion = persona.direccion;
-
         dbContext.SaveChanges();
-        return Ok(personaToUpdate);
+        return Ok(_dbContext.Personas);
     }
 
 
@@ -57,6 +70,6 @@ public class PersonaController : ControllerBase
 
         _dbContext.Remove(persona);
         _dbContext.SaveChanges();
-        return Ok("Persona Eliminada");
+        return Ok(_dbContext.Personas);
     }
 }

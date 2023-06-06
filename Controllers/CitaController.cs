@@ -13,7 +13,7 @@ public class CitaController : ControllerBase
         _dbContext = dbContext;
     }
 
-    [HttpGet]
+    [HttpGet("{id?}")]
     public IActionResult Get()
     {
         return Ok(_dbContext.Citas);
